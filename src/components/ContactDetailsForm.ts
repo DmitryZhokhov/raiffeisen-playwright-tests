@@ -1,6 +1,6 @@
 import { Locator, Page, expect } from '@playwright/test'
 
-export class ContactDetailsPage {
+export class ContactDetailsForm {
   readonly page: Page
   readonly name: Locator
   readonly male: Locator

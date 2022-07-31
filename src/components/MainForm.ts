@@ -1,6 +1,6 @@
 import { Locator, Page, expect } from '@playwright/test'
 
-export class MainPage {
+export class MainForm {
   readonly page: Page
   readonly title: Locator
   readonly nextButton: Locator

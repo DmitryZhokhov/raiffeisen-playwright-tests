@@ -1,6 +1,6 @@
 import { Locator, Page } from '@playwright/test'
 
-export class PhoneConfirmationPage {
+export class PhoneConfirmationForm {
   readonly page: Page
   readonly mobilePhone: Locator
   readonly confirmationCode: Locator
