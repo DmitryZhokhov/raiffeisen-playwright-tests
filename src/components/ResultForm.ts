@@ -7,10 +7,10 @@ export class ResultForm {
 
   constructor(page: Page) {
     this.page = page
-    this.title = page.locator('span[data-step-hidden="2"]')
+    this.title = page.locator('div[class="ccform-thx-page__row ccform-thx-page__row--last"] div[class="ccform-thx-page__title"]')
   }
 
-  async checkStepHeader(step: number) {
-    await expect(this.title).toHaveText(` (шаг ${step} из 5)`)
+  async checkResultHeader(text: string) {
+    await expect(this.title).toHaveText(text)
   }
 }

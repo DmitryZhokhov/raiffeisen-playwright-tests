@@ -11,9 +11,7 @@ export class PermanentAddressForm {
     this.page = page
     this.birthPlace = page.locator('textarea[name="birthPlace"]')
     this.permanentAddress = page.locator('textarea[name="permanentAddress"]')
-    this.taxResidency = page.locator(
-      'div[class="ccform-form-control ccform-js-form-control ccform-form-control--radio-inline _filled _valid"]'
-    )
+    this.taxResidency = page.locator('text=Только РФ')
     this.nextButton = page.locator('div[data-step="5"] button[data-context="next"]')
   }
 
@@ -29,7 +27,7 @@ export class PermanentAddressForm {
     await this.nextButton.click()
   }
 
-  async assertTaxResidency() {
-    await expect(this.taxResidency).toBeVisible()
+  async clickRussiaTaxResidency() {
+    await this.taxResidency.click()
   }
 }
