@@ -6,7 +6,6 @@ import { PermanentAddressForm } from '../components/PermanentAddressForm'
 import { DeliveryDetailsForm } from '../components/DeliveryDetailsForm'
 import { ResultForm } from '../components/ResultForm'
 import { confirmationMobilePhone } from '../helpers/confirmationMobilePhone.spec'
-import { interceptionResponseGender } from '../helpers/interceptionGender.spec'
 import { interceptionResponseResult } from '../helpers/interceptionResult.spec'
 
 test.describe.parallel('Raiffeisen Tests', () => {
@@ -32,8 +31,7 @@ test.describe.parallel('Raiffeisen Tests', () => {
     const mainPage = new MainForm(page)
     await mainPage.checkStepHeader(2)
     const contactDetailsForm = new ContactDetailsForm(page)
-    await contactDetailsForm.fillName('Иванов Дмитрий Михайлович')
-    await interceptionResponseGender(page, 'Иванов', 'Дмитрий', 'Михайлович', 'MALE')
+    await contactDetailsForm.fillName(page, 'Иванов', 'Дмитрий', 'Михайлович', 'MALE')
     await contactDetailsForm.fillBirthday('16.11.1986')
     await contactDetailsForm.fillEmail('test@gmail.com')
     await contactDetailsForm.assertCitizenship()

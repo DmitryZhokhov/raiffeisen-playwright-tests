@@ -1,4 +1,5 @@
 import { Locator, Page, expect } from '@playwright/test'
+import { interceptionResponseGender } from '../helpers/interceptionGender.spec'
 
 export class ContactDetailsForm {
   readonly page: Page
@@ -23,9 +24,10 @@ export class ContactDetailsForm {
     this.nextButton = page.locator('div[data-step="3"] button[data-context="next"]')
   }
 
-  async fillName(fullName: string) {
-    await this.name.fill(fullName)
-    await this.page.locator(`text=${fullName}`).click()
+  async fillName(page: Page, surname: string, name: string, patronymic: string, gender: string) {
+    await this.name.fill(`${surname} ${name} ${patronymic}`)
+    await this.page.locator(`text=${surname} ${name} ${patronymic}`).click()
+    await interceptionResponseGender(page, 'Иванов', 'Дмитрий', 'Михайлович', gender)
   }
 
   async fillBirthday(birthday: string) {
