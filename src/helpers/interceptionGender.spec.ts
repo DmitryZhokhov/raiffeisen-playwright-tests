@@ -1,7 +1,8 @@
 import { Page } from '@playwright/test'
 
 export async function interceptionResponseGender(page: Page, surname: string, name: string, patronymic: string, gender: string) {
-  await page.route('https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/fio', (route) => {
+  await page.route('https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/fio', async (route) => {
+    const response = await page.request.fetch(route.request())
     const mockResponseObject = {
       suggestions: [
         {
@@ -19,6 +20,7 @@ export async function interceptionResponseGender(page: Page, surname: string, na
       ],
     }
     route.fulfill({
+      response,
       body: JSON.stringify(mockResponseObject),
     })
   })
