@@ -2,6 +2,7 @@ import { Page, Request, Response } from '@playwright/test'
 
 export async function interceptionResponseResult(page: Page) {
   await page.route('https://oapi.raiffeisen.ru/api/forms/public/v1.0/forms/debit-card-single-field/66/answers', async (route) => {
+    const response = await page.request.fetch(route.request())
     const mockResponseObject = {
       success: true,
       error: {
@@ -20,6 +21,7 @@ export async function interceptionResponseResult(page: Page) {
       },
     }
     route.fulfill({
+      response,
       body: JSON.stringify(mockResponseObject),
     })
   })

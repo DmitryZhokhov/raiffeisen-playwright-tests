@@ -25,6 +25,7 @@ export class ContactDetailsForm {
 
   async fillName(fullName: string) {
     await this.name.fill(fullName)
+    await this.page.locator(`text=${fullName}`).click()
   }
 
   async fillBirthday(birthday: string) {

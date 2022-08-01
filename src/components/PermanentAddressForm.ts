@@ -21,6 +21,7 @@ export class PermanentAddressForm {
 
   async fillPermanentAddress(permanentAddress: string) {
     await this.permanentAddress.fill(permanentAddress)
+    await this.page.locator(`text=${permanentAddress}`).click()
   }
 
   async clickNextButton() {

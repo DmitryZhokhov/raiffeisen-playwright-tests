@@ -12,6 +12,7 @@ export class DeliveryDetailsForm {
   }
   async fillDeliveryAddress(deliveryAddress: string) {
     await this.deliveryAddress.fill(deliveryAddress)
+    await this.page.locator(`text=${deliveryAddress}`).click()
   }
 
   async clickNextButton() {
