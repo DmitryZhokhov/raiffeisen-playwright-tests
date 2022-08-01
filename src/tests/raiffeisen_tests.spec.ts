@@ -7,7 +7,7 @@ import { DeliveryDetailsForm } from '../components/DeliveryDetailsForm'
 import { ResultForm } from '../components/ResultForm'
 import { confirmationMobilePhone } from '../helpers/confirmationMobilePhone.spec'
 import { interceptionResponseGender } from '../helpers/interceptionGender.spec'
-import { interceptionResponseResult } from '../helpers/interceptionResult'
+import { interceptionResponseResult } from '../helpers/interceptionResult.spec'
 
 test.describe.parallel('Raiffeisen Tests', () => {
   let browser: Browser
