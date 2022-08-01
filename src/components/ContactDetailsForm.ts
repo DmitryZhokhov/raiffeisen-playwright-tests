@@ -39,12 +39,16 @@ export class ContactDetailsForm {
   async clickFemale() {
     await this.female.click()
   }
+
   async fillEmail(email: string) {
     await this.email.fill(email)
+    await this.page.locator(`text=${email}`).click()
   }
+
   async clickNextButton() {
     await this.nextButton.click()
   }
+
   async assertCitizenship() {
     await expect(this.citizenship).toBeVisible()
   }

@@ -1,4 +1,4 @@
-import { Page, Request, Response } from '@playwright/test'
+import { Page } from '@playwright/test'
 
 export async function interceptionResponseResult(page: Page) {
   await page.route('https://oapi.raiffeisen.ru/api/forms/public/v1.0/forms/debit-card-single-field/66/answers', async (route) => {
