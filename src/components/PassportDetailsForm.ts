@@ -1,4 +1,5 @@
 import { Locator, Page, expect } from '@playwright/test'
+import { interceptionResponsePassportIssuePlace } from '../helpers/interceptionPassportIssuePlace.spec'
 
 export class PassportDetailsForm {
   readonly page: Page
@@ -6,6 +7,7 @@ export class PassportDetailsForm {
   readonly passportIssueByCode: Locator
   readonly passportIssueDate: Locator
   readonly passportIssuePlace: Locator
+  readonly countryList: Locator
   readonly nextButton: Locator
 
   constructor(page: Page) {
@@ -21,7 +23,8 @@ export class PassportDetailsForm {
     await this.passportSeriaNumber.fill(passportSeriaNumber)
   }
 
-  async fillPassportIssueByCode(passportIssueByCode: string) {
+  async fillPassportIssueByCode(page: Page, passportIssueByCode: string, region: string, passportIssuePlace: string) {
+    await interceptionResponsePassportIssuePlace(page, passportIssueByCode, region, passportIssuePlace)
     await this.passportIssueByCode.fill(passportIssueByCode)
   }
 
@@ -31,6 +34,10 @@ export class PassportDetailsForm {
 
   async fillPassportIssuePlace(passportIssuePlace: string) {
     await this.passportIssuePlace.fill(passportIssuePlace)
+  }
+
+  async selectCountryFromList(country: string) {
+    await this.page.selectOption('name="birthCountry"', `${country}`)
   }
 
   async clickNextButton() {

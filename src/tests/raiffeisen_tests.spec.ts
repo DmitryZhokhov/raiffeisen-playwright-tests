@@ -6,6 +6,8 @@ import { PermanentAddressForm } from '../components/PermanentAddressForm'
 import { DeliveryDetailsForm } from '../components/DeliveryDetailsForm'
 import { ResultForm } from '../components/ResultForm'
 import { confirmationMobilePhone } from '../helpers/confirmationMobilePhone.spec'
+import { interceptionResponseGender } from '../helpers/interceptionGender.spec'
+import { interceptionResponsePassportIssuePlace } from '../helpers/interceptionPassportIssuePlace.spec'
 import { interceptionResponseResult } from '../helpers/interceptionResult.spec'
 
 test.describe.parallel('Raiffeisen Tests', () => {
@@ -39,8 +41,9 @@ test.describe.parallel('Raiffeisen Tests', () => {
     await mainPage.checkStepHeader(3)
     const passportDetailsForm = new PassportDetailsForm(page)
     await passportDetailsForm.fillPassportSeriaNumber('0505-000000')
-    await passportDetailsForm.fillPassportIssueByCode('000-000')
+    await passportDetailsForm.fillPassportIssueByCode(page, '250-001', '25', 'УМВД РОССИИ ПО ПРИМОРСКОМУ КРАЮ')
     await passportDetailsForm.fillPassportIssueDate('16.12.2006')
+    //await passportDetailsForm.selectCountryFromList('RU')
     await passportDetailsForm.fillPassportIssuePlace('УМВД РОССИИ ПО ПРИМОРСКОМУ КРАЮ')
     await passportDetailsForm.clickNextButton()
     await mainPage.checkStepHeader(4)
@@ -53,8 +56,7 @@ test.describe.parallel('Raiffeisen Tests', () => {
     const deliveryDetailsForm = new DeliveryDetailsForm(page)
     await deliveryDetailsForm.fillDeliveryAddress('г Владивосток, ул Басаргина, д 32, кв 10')
     await deliveryDetailsForm.choiceDeliveryType('Бесплатная доставка')
-    await interceptionResponseResult(page)
-    await deliveryDetailsForm.clickNextButton()
+    await deliveryDetailsForm.clickNextButton(page)
     const resultForm = new ResultForm(page)
     await resultForm.checkResultHeader('Заявка передана в службу доставки')
   })

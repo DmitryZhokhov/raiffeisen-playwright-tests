@@ -1,4 +1,5 @@
-import { Locator, Page, expect } from '@playwright/test'
+import { Locator, Page } from '@playwright/test'
+import { interceptionResponseResult } from '../helpers/interceptionResult.spec'
 
 export class DeliveryDetailsForm {
   readonly page: Page
@@ -20,7 +21,9 @@ export class DeliveryDetailsForm {
     await this.page.locator(`text=${deliveryType}`).click()
   }
 
-  async clickNextButton() {
+  async clickNextButton(page: Page) {
+    await interceptionResponseResult(page)
+    await this.nextButton.click()
     await this.nextButton.click()
   }
 }
