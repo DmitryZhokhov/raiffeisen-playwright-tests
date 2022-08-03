@@ -1,5 +1,6 @@
 import { Locator, Page } from '@playwright/test'
 import { interceptionResponseResult } from '../helpers/interceptionResult.spec'
+import { interceptionResponseAddress } from '../helpers/interceptionAddress.spec'
 
 export class DeliveryDetailsForm {
   readonly page: Page
@@ -12,7 +13,8 @@ export class DeliveryDetailsForm {
     this.nextButton = page.locator('div[data-step="6"] button[data-context="next"]')
   }
 
-  async fillDeliveryAddress(deliveryAddress: string) {
+  async fillDeliveryAddress(page: Page, deliveryAddress: string) {
+    await interceptionResponseAddress(page)
     await this.deliveryAddress.fill(deliveryAddress)
     await this.page.locator(`text=${deliveryAddress}`).click()
   }
@@ -23,7 +25,6 @@ export class DeliveryDetailsForm {
 
   async clickNextButton(page: Page) {
     await interceptionResponseResult(page)
-    await this.nextButton.click()
     await this.nextButton.click()
   }
 }

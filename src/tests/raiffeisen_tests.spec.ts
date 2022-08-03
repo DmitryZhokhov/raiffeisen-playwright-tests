@@ -20,7 +20,7 @@ test.describe.parallel('Raiffeisen Tests', () => {
       headless: false,
     })
     context = await browser.newContext({
-      viewport: { width: 1280, height: 720 },
+      viewport: { width: 1600, height: 880 },
     })
     page = await context.newPage()
     await page.goto('https://www.raiffeisen.ru/')
@@ -36,6 +36,7 @@ test.describe.parallel('Raiffeisen Tests', () => {
     await contactDetailsForm.fillName(page, 'Иванов', 'Дмитрий', 'Михайлович', 'MALE')
     await contactDetailsForm.fillBirthday('16.11.1986')
     await contactDetailsForm.fillEmail('test@gmail.com')
+    await contactDetailsForm.assertGender('M')
     await contactDetailsForm.assertCitizenship()
     await contactDetailsForm.clickNextButton()
     await mainPage.checkStepHeader(3)
@@ -43,8 +44,7 @@ test.describe.parallel('Raiffeisen Tests', () => {
     await passportDetailsForm.fillPassportSeriaNumber('0505-000000')
     await passportDetailsForm.fillPassportIssueByCode(page, '250-001', '25', 'УМВД РОССИИ ПО ПРИМОРСКОМУ КРАЮ')
     await passportDetailsForm.fillPassportIssueDate('16.12.2006')
-    //await passportDetailsForm.selectCountryFromList('RU')
-    await passportDetailsForm.fillPassportIssuePlace('УМВД РОССИИ ПО ПРИМОРСКОМУ КРАЮ')
+    await passportDetailsForm.selectCountryFromList('RU')
     await passportDetailsForm.clickNextButton()
     await mainPage.checkStepHeader(4)
     const permanentAddressForm = new PermanentAddressForm(page)
@@ -54,7 +54,7 @@ test.describe.parallel('Raiffeisen Tests', () => {
     await permanentAddressForm.clickNextButton()
     await mainPage.checkStepHeader(5)
     const deliveryDetailsForm = new DeliveryDetailsForm(page)
-    await deliveryDetailsForm.fillDeliveryAddress('г Владивосток, ул Басаргина, д 32, кв 10')
+    await deliveryDetailsForm.fillDeliveryAddress(page, 'г Владивосток, ул Басаргина, д 32, кв 10')
     await deliveryDetailsForm.choiceDeliveryType('Бесплатная доставка')
     await deliveryDetailsForm.clickNextButton(page)
     const resultForm = new ResultForm(page)

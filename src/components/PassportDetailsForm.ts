@@ -37,7 +37,7 @@ export class PassportDetailsForm {
   }
 
   async selectCountryFromList(country: string) {
-    await this.page.selectOption('name="birthCountry"', `${country}`)
+    await this.page.selectOption('[name="birthCountry"]', `${country}`)
   }
 
   async clickNextButton() {
