@@ -41,6 +41,11 @@ export class PassportDetailsForm {
   }
 
   async clickNextButton() {
+    await expect(
+      this.page.locator(
+        '[data-step="4"] [class="ccform-form-control ccform-js-form-control ccform-form-control--input _filled _valid"]'
+      )
+    ).toBeVisible()
     await this.nextButton.click()
   }
 }

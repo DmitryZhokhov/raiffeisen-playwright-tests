@@ -1,4 +1,4 @@
-import { Locator, Page } from '@playwright/test'
+import { Locator, Page, expect } from '@playwright/test'
 import { interceptionResponseResult } from '../helpers/interceptionResult.spec'
 import { interceptionResponseAddress } from '../helpers/interceptionAddress.spec'
 
@@ -25,6 +25,11 @@ export class DeliveryDetailsForm {
 
   async clickNextButton(page: Page) {
     await interceptionResponseResult(page)
+    await expect(
+      this.page.locator(
+        '[data-step="6"] [class="ccform-form-control ccform-js-form-control ccform-form-control--input _clear _filled _complete _valid"]'
+      )
+    ).toBeVisible()
     await this.nextButton.click()
   }
 }
