@@ -25,8 +25,8 @@ export class ContactDetailsForm {
   }
 
   async fillName(page: Page, surname: string, name: string, patronymic: string, gender: string) {
-    await this.name.fill(`${surname} ${name} ${patronymic}`)
     await interceptionResponseGender(page, surname, name, patronymic, gender)
+    await this.name.fill(`${surname} ${name} ${patronymic}`)
     await this.page.locator(`text=${surname} ${name} ${patronymic}`).click()
   }
 
@@ -46,9 +46,11 @@ export class ContactDetailsForm {
     await this.email.fill(email)
     await this.page.locator(`text=${email}`).click()
   }
+
   async assertGender(genderValue: string) {
     await this.page.locator(`input[value="${genderValue}"]`).check()
   }
+
   async assertCitizenship() {
     await expect(this.citizenship).toBeVisible()
   }

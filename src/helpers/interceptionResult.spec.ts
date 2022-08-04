@@ -1,4 +1,12 @@
-import { Page } from '@playwright/test'
+import { Page, expect } from '@playwright/test'
+
+export async function assertRequest(page: Page) {
+  const req = await page.waitForRequest(
+    'https://oapi.raiffeisen.ru/api/forms/public/v1.0/forms/debit-card-single-field/66/answers'
+  )
+  page.on('request', (request) => console.log('>>', request.method(), request.url()))
+  expect(req.postDataJSON()).toContain('"auth":{"phone":"71111111111","token":"YD5j3gq0eyQI8xJQ/Dpx7Cas"}')
+}
 
 export async function interceptionResponseResult(page: Page) {
   await page.route('https://oapi.raiffeisen.ru/api/forms/public/v1.0/forms/debit-card-single-field/66/answers', async (route) => {
@@ -26,5 +34,3 @@ export async function interceptionResponseResult(page: Page) {
     })
   })
 }
-
-// "auth":{"phone":"71111111111","token":"YD5j3gq0eyQI8xJQ/Dpx7Cas"}

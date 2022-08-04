@@ -54,7 +54,7 @@ test.describe.parallel('Raiffeisen Tests', () => {
     await permanentAddressForm.clickNextButton()
     await mainPage.checkStepHeader(5)
     const deliveryDetailsForm = new DeliveryDetailsForm(page)
-    await deliveryDetailsForm.fillDeliveryAddress(page, 'г Владивосток, ул Басаргина, д 32, кв 10')
+    await deliveryDetailsForm.fillDeliveryAddress('г Владивосток, ул Басаргина, д 32, кв 10')
     await deliveryDetailsForm.choiceDeliveryType('Бесплатная доставка')
     await deliveryDetailsForm.clickNextButton(page)
     const resultForm = new ResultForm(page)
