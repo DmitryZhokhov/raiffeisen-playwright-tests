@@ -29,7 +29,7 @@ test.describe.parallel('Raiffeisen Tests', () => {
     await confirmationMobilePhone(page, '+7(111)111-11-11', '1111')
   })
 
-  test('Order debit card by Male', async ({ request }) => {
+  test('Order debit card by Male', async () => {
     const mainPage = new MainForm(page)
     await mainPage.checkStepHeader(2)
     const contactDetailsForm = new ContactDetailsForm(page)
