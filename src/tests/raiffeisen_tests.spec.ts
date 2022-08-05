@@ -1,4 +1,4 @@
-import { Browser, BrowserContext, Page, test, chromium, expect } from '@playwright/test'
+import { Browser, BrowserContext, Page, test, chromium, expect, request } from '@playwright/test'
 import { MainForm } from '../components/MainForm'
 import { ContactDetailsForm } from '../components/ContactDetailsForm'
 import { PassportDetailsForm } from '../components/PassportDetailsForm'
@@ -8,7 +8,7 @@ import { ResultForm } from '../components/ResultForm'
 import { confirmationMobilePhone } from '../helpers/confirmationMobilePhone.spec'
 import { interceptionResponseGender } from '../helpers/interceptionGender.spec'
 import { interceptionResponsePassportIssuePlace } from '../helpers/interceptionPassportIssuePlace.spec'
-import { interceptionResponseResult } from '../helpers/interceptionResult.spec'
+import { interceptionResponseResult, assertRequest } from '../helpers/interceptionResult.spec'
 
 test.describe.parallel('Raiffeisen Tests', () => {
   let browser: Browser
@@ -17,7 +17,7 @@ test.describe.parallel('Raiffeisen Tests', () => {
 
   test.beforeAll(async () => {
     browser = await chromium.launch({
-      headless: false,
+      headless: true,
     })
     context = await browser.newContext({
       viewport: { width: 1600, height: 880 },
@@ -29,7 +29,7 @@ test.describe.parallel('Raiffeisen Tests', () => {
     await confirmationMobilePhone(page, '+7(111)111-11-11', '1111')
   })
 
-  test('Order debit card by Male', async () => {
+  test('Order debit card by Male', async ({ request }) => {
     const mainPage = new MainForm(page)
     await mainPage.checkStepHeader(2)
     const contactDetailsForm = new ContactDetailsForm(page)
@@ -57,6 +57,7 @@ test.describe.parallel('Raiffeisen Tests', () => {
     await deliveryDetailsForm.fillDeliveryAddress('г Владивосток, ул Басаргина, д 32, кв 10')
     await deliveryDetailsForm.choiceDeliveryType('Бесплатная доставка')
     await deliveryDetailsForm.clickNextButton(page)
+    await assertRequest(page, '71111111111', 'YD5j3gq0eyQI8xJQ/Dpx7Cas')
     const resultForm = new ResultForm(page)
     await resultForm.checkResultHeader('Заявка передана в службу доставки')
   })

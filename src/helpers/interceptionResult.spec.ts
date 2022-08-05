@@ -1,11 +1,12 @@
 import { Page, expect } from '@playwright/test'
 
-export async function assertRequest(page: Page) {
-  const req = await page.waitForRequest(
-    'https://oapi.raiffeisen.ru/api/forms/public/v1.0/forms/debit-card-single-field/66/answers'
-  )
-  page.on('request', (request) => console.log('>>', request.method(), request.url()))
-  expect(req.postDataJSON()).toContain('"auth":{"phone":"71111111111","token":"YD5j3gq0eyQI8xJQ/Dpx7Cas"}')
+export async function assertRequest(page: Page, phone: string, token: string) {
+  page.on('request', (request) => {
+    if (request.url() === 'https://oapi.raiffeisen.ru/api/forms/public/v1.0/forms/debit-card-single-field/66/answers') {
+      console.log(request.method(), request.url(), request.postDataJSON())
+      expect(request.postDataJSON()).toMatchObject({ auth: { phone: `${phone}`, token: `${token}` } })
+    }
+  })
 }
 
 export async function interceptionResponseResult(page: Page) {
