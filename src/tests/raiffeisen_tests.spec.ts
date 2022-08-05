@@ -8,7 +8,7 @@ import { ResultForm } from '../components/ResultForm'
 import { confirmationMobilePhone } from '../helpers/confirmationMobilePhone.spec'
 import { interceptionResponseGender } from '../helpers/interceptionGender.spec'
 import { interceptionResponsePassportIssuePlace } from '../helpers/interceptionPassportIssuePlace.spec'
-import { interceptionResponseResult, assertRequest } from '../helpers/interceptionResult.spec'
+import { interceptionResponseResult } from '../helpers/interceptionResult.spec'
 
 test.describe.parallel('Raiffeisen Tests', () => {
   let browser: Browser
@@ -56,8 +56,8 @@ test.describe.parallel('Raiffeisen Tests', () => {
     const deliveryDetailsForm = new DeliveryDetailsForm(page)
     await deliveryDetailsForm.fillDeliveryAddress('г Владивосток, ул Басаргина, д 32, кв 10')
     await deliveryDetailsForm.choiceDeliveryType('Бесплатная доставка')
-    await deliveryDetailsForm.clickNextButton(page)
-    await assertRequest(page, '71111111111', 'YD5j3gq0eyQI8xJQ/Dpx7Cas')
+    await interceptionResponseResult(page, '71111111111', 'YD5j3gq0eyQI8xJQ/Dpx7Cas')
+    await deliveryDetailsForm.clickNextButton()
     const resultForm = new ResultForm(page)
     await resultForm.checkResultHeader('Заявка передана в службу доставки')
   })

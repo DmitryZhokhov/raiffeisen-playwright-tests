@@ -1,16 +1,14 @@
 import { Page, expect } from '@playwright/test'
 
-export async function assertRequest(page: Page, phone: string, token: string) {
+export async function interceptionResponseResult(page: Page, phone: string, token: string) {
+  const requestURL = 'https://oapi.raiffeisen.ru/api/forms/public/v1.0/forms/debit-card-single-field/66/answers'
   page.on('request', (request) => {
-    if (request.url() === 'https://oapi.raiffeisen.ru/api/forms/public/v1.0/forms/debit-card-single-field/66/answers') {
-      console.log(request.method(), request.url(), request.postDataJSON())
+    if (request.url() === requestURL) {
+      //console.log(request.method(), request.url(), request.postDataJSON())
       expect(request.postDataJSON()).toMatchObject({ auth: { phone: `${phone}`, token: `${token}` } })
     }
   })
-}
-
-export async function interceptionResponseResult(page: Page) {
-  await page.route('https://oapi.raiffeisen.ru/api/forms/public/v1.0/forms/debit-card-single-field/66/answers', async (route) => {
+  await page.route(requestURL, async (route) => {
     const response = await page.request.fetch(route.request())
     const mockResponseObject = {
       success: true,
