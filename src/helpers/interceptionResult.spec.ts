@@ -4,7 +4,7 @@ export async function interceptionResponseResult(page: Page, phone: string, toke
   const requestURL = 'https://oapi.raiffeisen.ru/api/forms/public/v1.0/forms/debit-card-single-field/66/answers'
   page.on('request', (request) => {
     if (request.url() === requestURL) {
-      console.log(request.method(), request.url(), request.postDataJSON())
+      //console.log(request.method(), request.url(), request.postDataJSON())
       expect(request.postDataJSON()).toMatchObject({ auth: { phone: `${phone}`, token: `${token}` } })
       expect(request.postDataJSON()).toMatchObject({
         answer: {
